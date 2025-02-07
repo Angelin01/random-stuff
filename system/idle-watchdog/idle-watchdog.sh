@@ -6,9 +6,10 @@ set -euo pipefail
 INTERVAL=60
 IDLE_LIMIT=5
 SHUTDOWN_DELAY_MIN=1
+BOOT_GRACE_SECONDS=600
 
 # Network
-NETWORK_THRESHOLD_BYTES=$(( 512 * 1024 ))
+NETWORK_THRESHOLD_BYTES=$(( 1 * 1024 * 1024 ))
 NETWORK_INTERFACES=("enp12s0")
 
 # Systemd Services
@@ -72,6 +73,14 @@ user_services_idle() {
   done
   return 0
 }
+
+uptime_seconds=$(awk '{print int($1)}' /proc/uptime)
+
+if (( uptime_seconds < BOOT_GRACE_SECONDS )); then
+  sleep_time=$(( BOOT_GRACE_SECONDS - uptime_seconds ))
+  log "Waiting for $sleep_time seconds until grace period ends..."
+  sleep "$sleep_time"
+fi
 
 while true; do
   # Check network first to ensure that the diff gets calculated properly
