@@ -1,0 +1,12 @@
+[Unit]
+Description=Automatic System Shutdown on Idle
+After=network.target
+
+[Service]
+ExecStart=/opt/idle-watchdog/idle-shutdown-watchdog.sh
+Restart=on-failure
+User=root
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
