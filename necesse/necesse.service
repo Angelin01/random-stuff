@@ -1,0 +1,29 @@
+[Unit]
+Description=Angelin's Necesse Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=necesse
+Group=necesse
+Nice=-10
+ProtectSystem=full
+PrivateDevices=true
+NoNewPrivileges=true
+PrivateTmp=true
+Type=simple
+WorkingDirectory=/opt/necesse/server
+ReadWritePaths=/opt/necesse/server
+ExecStart=/opt/necesse/server/start.sh
+ExecStop=/bin/bash -c 'printf "exit\n\n" > /opt/necesse/server/in && sleep 15'
+SuccessExitStatus=1
+Restart=on-failure
+RestartSec=5s
+StartLimitInterval=30m
+StartLimitBurst=5
+StandardInput=tty
+TTYPath=/dev/tty41
+DeviceAllow=/dev/tty41 rw
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Update Necesse Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/necesse/server/
+ExecStart=/opt/necesse/server/update.sh

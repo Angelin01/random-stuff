@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Necesse Update during off-hours
+
+[Timer]
+OnCalendar=*-*-* 06:30
+Persistent=true
+Unit=necesse-update.service
+
+[Install]
+WantedBy=timers.target
