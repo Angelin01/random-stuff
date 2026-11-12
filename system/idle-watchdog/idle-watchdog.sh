@@ -51,7 +51,7 @@ network_idle() {
 }
 
 no_users_logged_in() {
-  [ "$(who | wc -l)" = "0" ]
+  [ -z "$(w -h)" ]
 }
 
 system_services_idle() {
